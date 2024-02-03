@@ -72,16 +72,18 @@ function generateRandomName() {
 
 document.addEventListener("DOMContentLoaded", function () {
   var noteName = window.location.pathname.split("/")[1];
-
+  console.log(noteName);
   if (!noteName) {
     noteName = generateRandomName();
     window.history.pushState(null, null, `/${noteName}`);
   }
+  console.log(noteName);
   fetch(`/api/note/${noteName}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data.content);
       // Set the existing note content to the textarea
+      console.log(noteName);
       document.getElementById("text-input").value = data.content;
     })
     .catch((error) => {

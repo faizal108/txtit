@@ -19,6 +19,16 @@ app.use(express.static("public"));
 connectDB();
 
 // Handle requests to the base URL
+app.get("/", async (req, res) => {
+  try {
+    const nameOfNote = generateRandomName();
+    res.redirect(`/${nameOfNote}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
@@ -26,32 +36,16 @@ app.get("/:name_of_note", async (req, res) => {
     // Find the note in MongoDB based on the provided name
     const foundNote = await NoteModel.findOne({ name: nameOfNote });
     
-    if (foundNote) {
-      // Send the note content as a response
-      res.json({ content: foundNote.content });
-    } else {
-      // If note not found, send an empty response
-      res.json({ content: "" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
+    // Read the index.html file
+    const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
 
-app.get("/api/note/:name_of_note", async (req, res) => {
-  try {
-    const nameOfNote = req.params.name_of_note;
-
-    // Find the note in MongoDB based on the provided name
-    const foundNote = await NoteModel.findOne({ name: nameOfNote });
-    
     if (foundNote) {
-      // Send the note content as a response
-      res.json({ content: foundNote.content });
+      // Replace the placeholder in the HTML file with the note content
+      const updatedHtml = indexHtml.replace('<!-- ReplaceContentHere -->', foundNote.content);
+      res.send(updatedHtml);
     } else {
-      // If note not found, send an empty response
-      res.json({ content: "" });
+      // If note not found, send the original HTML file
+      res.send(indexHtml);
     }
   } catch (error) {
     console.error(error);
@@ -82,3 +76,17 @@ app.post("/api/save/:name_of_note", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
 });
+
+function generateRandomName() {
+  const length = 10;
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let randomName = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomName += characters.charAt(randomIndex);
+  }
+
+  return randomName;
+}
