@@ -55,13 +55,32 @@ function downloadText() {
       // Handle errors as needed
     });
 }
+function generateRandomName() {
+  const length = 10;
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let randomName = "";
 
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomName += characters.charAt(randomIndex);
+  }
+
+  return randomName;
+}
 document.addEventListener("DOMContentLoaded", function () {
+  
   var textarea = document.getElementById("text-input");
   var saveInterval;
 
-  // Load note content based on the URL
-  // loadNoteContent(noteName);
+  // Get the note name from the URL
+  var noteName = window.location.pathname.split("/")[1];
+
+  if (!noteName) {
+    noteName = generateRandomName();
+    window.history.pushState(null,null,`${noteName}`);
+  }
+
 
   // Autosave functionality
   textarea.addEventListener("input", function () {
@@ -83,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        console.log("Content saved successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -92,10 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function loadNoteContent(noteName) {
     try {
-      const response = await fetch(`/api/note/${noteName}`);
-      const data = await response.json();
-      const noteContent = data.content;
-      textarea.value = noteContent; // Update the textarea with the loaded content
+      await fetch(`/${noteName}`);
     } catch (error) {
       console.error("Error loading note content:", error);
     }

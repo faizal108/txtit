@@ -19,11 +19,9 @@ app.use(express.static("public"));
 // Connect to MongoDB using the imported function
 connectDB();
 
-app.get("/s", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
-    console.log("Generating random name...");
     const nameOfNote = generateRandomName();
-    console.log("Generated name:", nameOfNote);
     res.redirect(`/${nameOfNote}`);
   } catch (error) {
     console.error(error);
@@ -34,12 +32,10 @@ app.get("/s", async (req, res) => {
 app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
-    console.log("enter in endpoint....");
     // Find the note in MongoDB based on the provided name
     const foundNote = await NoteModel.findOne({ name: nameOfNote });
     // Read the index.html file
     const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
-    console.log(indexHtml);
     if (foundNote) {
       const content = '<textarea id="text-input" placeholder="Type your text here...">' + foundNote.content + '</textarea>';
       // Replace the placeholder in the HTML file with the note content
