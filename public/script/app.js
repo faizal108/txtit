@@ -56,58 +56,22 @@ function downloadText() {
     });
 }
 
-function generateRandomName() {
-  const length = 10;
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let randomName = "";
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomName += characters.charAt(randomIndex);
-  }
-
-  return randomName;
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-  var noteName = window.location.pathname.split("/")[1];
-  console.log(noteName);
-  if (!noteName) {
-    noteName = generateRandomName();
-    window.history.pushState(null, null, `/${noteName}`);
-  }
-  console.log(noteName);
-  fetch(`/api/note/${noteName}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data.content);
-      // Set the existing note content to the textarea
-      console.log(noteName);
-      document.getElementById("text-input").value = data.content;
-    })
-    .catch((error) => {
-      console.error("Error fetching note content:", error);
-    });
-
-  // DONE
-  // autosave functionality
   var textarea = document.getElementById("text-input");
   var saveInterval;
 
-  textarea.addEventListener("input", function () {
-    // Clear previous autosave timer
-    clearTimeout(saveInterval);
+  // Load note content based on the URL
+  // loadNoteContent(noteName);
 
-    // Set a new autosave timer
+  // Autosave functionality
+  textarea.addEventListener("input", function () {
+    clearTimeout(saveInterval);
     saveInterval = setTimeout(function () {
       saveContent(textarea.value);
-    }, 2000); // Set the autosave interval in milliseconds (e.g., 2000ms = 2 seconds)
+    }, 2000);
   });
 
-  // DONE
   function saveContent(content) {
-    // Make a POST request to save the content
     fetch(`/api/save/${noteName}`, {
       method: "POST",
       headers: {
@@ -123,7 +87,17 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error:", error);
-        // Handle errors as needed
       });
+  }
+
+  async function loadNoteContent(noteName) {
+    try {
+      const response = await fetch(`/api/note/${noteName}`);
+      const data = await response.json();
+      const noteContent = data.content;
+      textarea.value = noteContent; // Update the textarea with the loaded content
+    } catch (error) {
+      console.error("Error loading note content:", error);
+    }
   }
 });
