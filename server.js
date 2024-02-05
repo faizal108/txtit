@@ -4,7 +4,8 @@ import { promises as fs } from "fs";
 import { connectDB, NoteModel } from "./db.js";
 import bodyParser from "body-parser";
 import { generateRandomName } from "./utils.js";
-import DOMPurify from "dompurify";
+import { JSDOM } from 'jsdom';
+
 const { json } = bodyParser;
 
 const app = express();
@@ -32,21 +33,29 @@ app.get("/", async (req, res) => {
 app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
-    // Find the note in MongoDB based on the provided name
-    const foundNote = await NoteModel.findOne({ name: nameOfNote });
-    // Read the index.html file
+    const foundNote = await NoteModel.findOne({name : nameOfNote});
     const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
+
     if (foundNote) {
-      const content = '<textarea id="text-input" placeholder="Type your text here...">' + foundNote.content + '</textarea>';
-      // Replace the placeholder in the HTML file with the note content
-      const updatedHtml = indexHtml.replace('<textarea id="text-input" placeholder="Type your text here..."></textarea>', content);
+      const dom = new JSDOM(indexHtml);
+      const document = dom.window.document;
+
+      const textarea = document.createElement('textarea');
+      textarea.id = 'text-input';
+      textarea.placeholder = 'Type your text here...';
+      textarea.textContent = foundNote.content;
+
+      const existingTextarea = document.getElementById('text-input');
+      existingTextarea.parentNode.replaceChild(textarea, existingTextarea);
+
+      const updatedHtml = dom.serialize();
+
       res.send(updatedHtml);
     } else {
-      // If note not found, send the original HTML file
       res.send(indexHtml);
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error handling request:", error);
     res.status(500).send("Internal Server Error");
   }
 });

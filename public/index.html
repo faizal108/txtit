@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/style.css" />
     <title>txtit</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <section class="main">
-        <div id="navbar">
-            <a href="#" id="menu" title="Open Menu" onclick="dropMenu()"><img src="./assets/menu-bar.png" alt="MENU"></a>
-            <a href="#" class="menu-item" id="close" title="Close Menu"><img src="./assets/close.png" alt="MENU"></a>
-            <a href="#" class="menu-item" title="How To Use It"><img src="./assets/question.png" alt="MENU"></a>
-            <a href="#" class="menu-item" id="download-button" title="Download Text To Local" onclick="downloadText()"><img src="./assets/download.png" alt="MENU"></a>
+      <div id="navbar">
+        <a href="#" id="menu" title="Open Menu" onclick="dropMenu()"
+          ><img src="./assets/menu-bar.png" alt="MENU"
+        /></a>
+        <a href="#" class="menu-item" id="close" title="Close Menu"
+          ><img src="./assets/close.png" alt="MENU"
+        /></a>
+        <a href="#" class="menu-item" title="How To Use It"
+          ><img src="./assets/question.png" alt="MENU"
+        /></a>
+        <a
+          href="#"
+          class="menu-item"
+          id="download-button"
+          title="Download Text To Local"
+          onclick="downloadText()"
+          ><img src="./assets/download.png" alt="MENU"
+        /></a>
+      </div>
+
+      <div id="main-container">
+        <!-- Top icons -->
+        <div id="icons-container">
+          <span id="saveIcon" class="indicator-icon"
+            ><img src="./assets/check.png" alt="SAVE"
+          /></span>
+          <span id="loadingIcon" class="indicator-icon"
+            ><img src="./assets/loading.png" class="rotate" alt="LOADING"
+          /></span>
         </div>
-        
-        <div id="main-container">
-            <!-- Top icons -->
-            <div id="icons-container">
-                <span id="saveIcon"><img src="./assets/check.png"></span>
-                <span id="loadingIcon" style="display: none;"><img src="./assets/loading.png"></span>
-            </div>
-        
-            <!-- Text input -->
-            <form action="" method="post">
-                <textarea id="text-input" placeholder="Type your text here..."></textarea>
-            </form>
-        </div>
+
+        <!-- Text input -->
+        <form action="" method="post">
+          <textarea
+            id="text-input"
+            placeholder="Type your text here..."
+          ></textarea>
+        </form>
+      </div>
     </section>
 
+    <div class="container close">
+      <h1>Hello this is about</h1>
+    </div>
 
     <!-- ------Script----- -->
     <script src="./script/app.js"></script>
-</body>
+  </body>
 </html>

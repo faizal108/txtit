@@ -69,7 +69,12 @@ function generateRandomName() {
   return randomName;
 }
 document.addEventListener("DOMContentLoaded", function () {
-  
+  // contain indicator icon
+  var saveIcon = document.getElementById("saveIcon");
+  var loadingIcon = document.getElementById("loadingIcon");
+
+  saveIcon.classList.toggle("open");
+
   var textarea = document.getElementById("text-input");
   var saveInterval;
 
@@ -78,14 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!noteName) {
     noteName = generateRandomName();
-    window.history.pushState(null,null,`${noteName}`);
+    window.history.pushState(null, null, `${noteName}`);
   }
-
 
   // Autosave functionality
   textarea.addEventListener("input", function () {
     clearTimeout(saveInterval);
     saveInterval = setTimeout(function () {
+      toggleIcons();
       saveContent(textarea.value);
     }, 2000);
   });
@@ -101,6 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
+        } else {
+          toggleIcons();
         }
       })
       .catch((error) => {
@@ -108,11 +115,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  async function loadNoteContent(noteName) {
-    try {
-      await fetch(`/${noteName}`);
-    } catch (error) {
-      console.error("Error loading note content:", error);
-    }
+  function toggleIcons(){
+    saveIcon.classList.toggle("open");
+    loadingIcon.classList.toggle("open");
   }
 });
