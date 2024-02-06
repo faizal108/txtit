@@ -17,7 +17,6 @@ function dropMenu() {
     hamburger.style.display = "block";
   });
 }
-
 function downloadText() {
   var textToDownload = document.getElementById("text-input").value;
 
@@ -69,6 +68,18 @@ function generateRandomName() {
   return randomName;
 }
 document.addEventListener("DOMContentLoaded", function () {
+  //how to use it button
+  const aboutBtn = document.getElementById("about");
+  const aboutContainer = document.querySelector(".about-container");
+  const aboutClose = document.getElementById("about-close-btn"); // Use querySelector to select the first element with the class
+  aboutBtn.addEventListener("click", () => {
+    aboutContainer.classList.toggle("close");
+  });
+
+  aboutClose.addEventListener("click", () => {
+    aboutContainer.classList.toggle("close");
+  })
+
   // contain indicator icon
   var saveIcon = document.getElementById("saveIcon");
   var loadingIcon = document.getElementById("loadingIcon");
@@ -115,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  function toggleIcons(){
+  function toggleIcons() {
     saveIcon.classList.toggle("open");
     loadingIcon.classList.toggle("open");
   }

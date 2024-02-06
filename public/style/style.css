@@ -106,7 +106,7 @@ textarea::-webkit-scrollbar {
 
 /* section 2 */
 
-.container {
+.about-container {
   border: 4px double rgb(82, 158, 212);
   position: absolute;
   top: 50%;
@@ -117,7 +117,25 @@ textarea::-webkit-scrollbar {
   height: 70vh;
   z-index: 5;
   background-color: rgba(0, 0, 0, 0.279);
+  padding: .5rem;
   color: rgba(255, 255, 255, 0.914);
+}
+
+.header{
+  width: 1.5rem;
+  height: 1.5rem;
+  position: fixed;
+  right: .5rem;
+  top: .5rem;
+}
+#about-close-btn{
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: contain;
+}
+#about-close-btn img {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 /* mobile */
@@ -152,7 +170,7 @@ textarea::-webkit-scrollbar {
     color: white;
   }
 
-  .container {
+  .about-container {
     border-radius: 10px;
     width: 70%;
     height: 60vh;
