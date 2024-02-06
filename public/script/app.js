@@ -19,40 +19,23 @@ function dropMenu() {
 }
 function downloadText() {
   var textToDownload = document.getElementById("text-input").value;
-
+  var noteName = window.location.pathname.split("/")[1];
   // Check if the textarea is empty
   if (textToDownload.trim() === "") {
     alert("Textarea is empty. Please enter some text.");
     return;
   }
 
-  // Make a POST request to the server
-  fetch("/api/download", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ text: textToDownload }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.blob();
-    })
-    .then((blob) => {
-      // Create a link element to trigger the download
-      var link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "textFile.txt";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      // Handle errors as needed
-    });
+  // Create a Blob with the content
+  const blob = new Blob([textToDownload], { type: 'text/plain' });
+
+  // Create a link element to trigger the download
+  var link = document.createElement("a");
+  link.href = window.URL.createObjectURL(blob);
+  link.download = `${noteName}_file.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 function generateRandomName() {
   const length = 10;
@@ -67,6 +50,7 @@ function generateRandomName() {
 
   return randomName;
 }
+
 document.addEventListener("DOMContentLoaded", function () {
   //how to use it button
   const aboutBtn = document.getElementById("about");
