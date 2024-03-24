@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function saveContent(content) {
-    fetch(`/api/save/${noteName}`, {
+    fetch(`https://txtit-phi.vercel.app/api/save/${noteName}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
