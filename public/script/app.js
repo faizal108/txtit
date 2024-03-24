@@ -79,6 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!noteName) {
     noteName = generateRandomName();
     window.history.pushState(null, null, `${noteName}`);
+  }else{
+    window.history.pushState(null, null, `${noteName}`);
   }
 
   // Autosave functionality
