@@ -1,9 +1,13 @@
 // db.js
 import { connect, Schema, model } from "mongoose";
+import dotenv from "dotenv";  
+
+dotenv.config();
+
 
 const connectDB = async () => {
   try {
-    await connect("mongodb://localhost:27017/txtitdb", {
+    await connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
