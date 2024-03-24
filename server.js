@@ -5,7 +5,8 @@ import { connectDB, NoteModel } from "./db.js";
 import bodyParser from "body-parser";
 import { generateRandomName } from "./utils.js";
 import { JSDOM } from 'jsdom';
-
+import { injectSpeedInsights } from '@vercel/speed-insights';
+ 
 const { json } = bodyParser;
 
 const app = express();
@@ -19,6 +20,8 @@ app.use(express.static("public"));
 
 // Connect to MongoDB using the imported function
 connectDB();
+
+injectSpeedInsights();
 
 app.get("/", async (req, res) => {
   try {
