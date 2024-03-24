@@ -78,11 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
   alert(noteName);
   if (!noteName) {
     noteName = generateRandomName();
-    window.history.pushState(null, null, `${noteName}`);
   }else{
-    window.history.pushState(null, null, `${noteName}`);
     alert(noteName);
   }
+  window.history.pushState(null, null, `${noteName}`);
+
 
   // Autosave functionality
   textarea.addEventListener("input", function () {
