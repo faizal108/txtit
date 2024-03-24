@@ -75,12 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Get the note name from the URL
   var noteName = window.location.pathname.split("/")[1];
-  console.log(noteName);
+  alert(noteName);
   if (!noteName) {
     noteName = generateRandomName();
     window.history.pushState(null, null, `${noteName}`);
   }else{
     window.history.pushState(null, null, `${noteName}`);
+    alert(noteName);
   }
 
   // Autosave functionality
