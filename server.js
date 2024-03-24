@@ -23,7 +23,7 @@ connectDB();
 
 injectSpeedInsights();
 
-app.get("/", async (req, res) => {
+app.get("https://txtit-phi.vercel.app/", async (req, res) => {
   try {
     const nameOfNote = generateRandomName();
     res.redirect(`/${nameOfNote}`);
@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/:name_of_note", async (req, res) => {
+app.get("https://txtit-phi.vercel.app/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
     const foundNote = await NoteModel.findOne({name : nameOfNote});
@@ -63,7 +63,7 @@ app.get("/:name_of_note", async (req, res) => {
   }
 });
 
-app.post("/api/save/:name_of_note", async (req, res) => {
+app.post("https://txtit-phi.vercel.app/api/save/:name_of_note", async (req, res) => {
   try {
     const textToSave = req.body.text;
     const nameOfNote = req.params.name_of_note;
