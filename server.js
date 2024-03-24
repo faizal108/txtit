@@ -10,7 +10,6 @@ import { injectSpeedInsights } from '@vercel/speed-insights';
 const { json } = bodyParser;
 
 const app = express();
-const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(json());
@@ -23,7 +22,7 @@ connectDB();
 
 injectSpeedInsights();
 
-app.get("https://txtit-a.vercel.app/", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const nameOfNote = generateRandomName();
     res.redirect(`/${nameOfNote}`);
@@ -33,7 +32,7 @@ app.get("https://txtit-a.vercel.app/", async (req, res) => {
   }
 });
 
-app.get("https://txtit-a.vercel.app/:name_of_note", async (req, res) => {
+app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
     const foundNote = await NoteModel.findOne({name : nameOfNote});
@@ -63,7 +62,7 @@ app.get("https://txtit-a.vercel.app/:name_of_note", async (req, res) => {
   }
 });
 
-app.post("https://txtit-a.vercel.app/api/save/:name_of_note", async (req, res) => {
+app.post("/api/save/:name_of_note", async (req, res) => {
   try {
     const textToSave = req.body.text;
     const nameOfNote = req.params.name_of_note;
@@ -82,7 +81,6 @@ app.post("https://txtit-a.vercel.app/api/save/:name_of_note", async (req, res) =
   }
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}/`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT || 3000}/`);
 });

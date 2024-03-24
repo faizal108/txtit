@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Get the note name from the URL
   var noteName = window.location.pathname.split("/")[1];
-
+  console.log(noteName);
   if (!noteName) {
     noteName = generateRandomName();
     window.history.pushState(null, null, `${noteName}`);
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function saveContent(content) {
-    fetch(`https://txtit-a.vercel.app/api/save/${noteName}`, {
+    fetch(`/api/save/${noteName}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
