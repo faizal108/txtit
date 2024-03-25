@@ -22,22 +22,21 @@ connectDB();
 
 injectSpeedInsights();
 
-app.get("/", async (req, res) => {
+// app.get("/", async (req, res) => {
+//   try {
+//     const nameOfNote = generateRandomName();
+//     res.redirect(`/${nameOfNote}`);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+app.get("/ping", async (req, res) => {
   try {
-    const nameOfNote = generateRandomName();
-    res.redirect(`/${nameOfNote}`);
+    res.send("Connection Up..")
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-app.get("/demo", async (req, res) => {
-  try {
-    const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
-    res.send(indexHtml);
-  } catch (error) {
-    console.error("Error serving static file:", error);
     res.status(500).send("Internal Server Error");
   }
 });

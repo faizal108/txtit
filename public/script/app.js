@@ -75,13 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Get the note name from the URL
   var noteName = window.location.pathname.split("/")[1];
-  alert(noteName);
   if (!noteName) {
     noteName = generateRandomName();
-  }else{
-    alert(noteName);
+    window.history.pushState(null, null, `${noteName}`);
   }
-  window.history.pushState(null, null, `${noteName}`);
 
 
   // Autosave functionality
@@ -117,4 +114,20 @@ document.addEventListener("DOMContentLoaded", function () {
     saveIcon.classList.toggle("open");
     loadingIcon.classList.toggle("open");
   }
+
+  setInterval(function() {
+    fetch("/ping")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then(() => {
+        console.log("Ping successful. Redirecting...");
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  }, 5000); // 5000 milliseconds = 5 seconds
+
 });
