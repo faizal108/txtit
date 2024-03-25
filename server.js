@@ -22,7 +22,7 @@ connectDB();
 
 injectSpeedInsights();
 
-app.get("/", async (req, res) => {
+app.get("/api/", async (req, res) => {
   try {
     const nameOfNote = generateRandomName();
     res.redirect(`/${nameOfNote}`);
@@ -32,7 +32,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/ping", async (req, res) => {
+app.get("/api/ping", async (req, res) => {
   try {
     res.send("Connection Up..")
   } catch (error) {
@@ -41,7 +41,7 @@ app.get("/ping", async (req, res) => {
   }
 });
 
-app.get("/:name_of_note", async (req, res) => {
+app.get("/api/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
     const foundNote = await NoteModel.findOne({name : nameOfNote});

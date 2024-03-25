@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   setInterval(function() {
-    fetch("/ping")
+    fetch("/api/ping")
       .then(response => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
