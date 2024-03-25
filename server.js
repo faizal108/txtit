@@ -24,7 +24,7 @@ injectSpeedInsights();
 
 app.get("/", async (req, res) => {
   try {
-    const indexHtml = await fs.readFile("./public/index.html", "utf-8");
+    const indexHtml = await fs.readFile("../public/index.html", "utf-8");
     const dom = new JSDOM(indexHtml);
     // const nameOfNote = generateRandomName();
     // res.redirect(`/${nameOfNote}`);
@@ -40,7 +40,7 @@ app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
     const foundNote = await NoteModel.findOne({ name: nameOfNote });
-    const indexHtml = await fs.readFile("./public/index.html", "utf-8");
+    const indexHtml = await fs.readFile("../public/index.html", "utf-8");
 
     if (foundNote) {
       const dom = new JSDOM(indexHtml);
