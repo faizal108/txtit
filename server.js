@@ -4,9 +4,9 @@ import { promises as fs } from "fs";
 import { connectDB, NoteModel } from "./db.js";
 import bodyParser from "body-parser";
 import { generateRandomName } from "./utils.js";
-import { JSDOM } from 'jsdom';
-import { injectSpeedInsights } from '@vercel/speed-insights';
- 
+import { JSDOM } from "jsdom";
+import { injectSpeedInsights } from "@vercel/speed-insights";
+
 const { json } = bodyParser;
 
 const app = express();
@@ -15,7 +15,7 @@ const app = express();
 app.use(json());
 
 // Serve static files (e.g., HTML, CSS, images)
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 // Connect to MongoDB using the imported function
 connectDB();
@@ -24,33 +24,34 @@ injectSpeedInsights();
 
 app.get("/", async (req, res) => {
   try {
-    const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
+    const indexHtml = await fs.readFile("./public/index.html", "utf-8");
+    const dom = new JSDOM(indexHtml);
     // const nameOfNote = generateRandomName();
     // res.redirect(`/${nameOfNote}`);
-    res.send(indexHtml);
+    const updatedHtml = dom.serialize();
+    res.send(updatedHtml);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-
 app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
-    const foundNote = await NoteModel.findOne({name : nameOfNote});
-    const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
+    const foundNote = await NoteModel.findOne({ name: nameOfNote });
+    const indexHtml = await fs.readFile("./public/index.html", "utf-8");
 
     if (foundNote) {
       const dom = new JSDOM(indexHtml);
       const document = dom.window.document;
 
-      const textarea = document.createElement('textarea');
-      textarea.id = 'text-input';
-      textarea.placeholder = 'Type your text here...';
+      const textarea = document.createElement("textarea");
+      textarea.id = "text-input";
+      textarea.placeholder = "Type your text here...";
       textarea.textContent = foundNote.content;
 
-      const existingTextarea = document.getElementById('text-input');
+      const existingTextarea = document.getElementById("text-input");
       existingTextarea.parentNode.replaceChild(textarea, existingTextarea);
 
       const updatedHtml = dom.serialize();
@@ -85,5 +86,7 @@ app.post("/api/save/:name_of_note", async (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT || 3000}/`);
+  console.log(
+    `Server is running on http://localhost:${process.env.PORT || 3000}/`
+  );
 });

@@ -115,19 +115,4 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingIcon.classList.toggle("open");
   }
 
-  setInterval(function() {
-    fetch("/api/ping")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-      })
-      .then(() => {
-        console.log("Ping successful. Redirecting...");
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-  }, 5000); // 5000 milliseconds = 5 seconds
-
 });
