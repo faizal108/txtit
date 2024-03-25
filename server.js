@@ -22,26 +22,20 @@ connectDB();
 
 injectSpeedInsights();
 
-app.get("/api/", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
-    const nameOfNote = generateRandomName();
-    res.redirect(`/${nameOfNote}`);
+    const indexHtml = await fs.readFile('./public/index.html', 'utf-8');
+    // const nameOfNote = generateRandomName();
+    // res.redirect(`/${nameOfNote}`);
+    res.send(indexHtml);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-app.get("/api/ping", async (req, res) => {
-  try {
-    res.send("Connection Up..")
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
 
-app.get("/api/:name_of_note", async (req, res) => {
+app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
     const foundNote = await NoteModel.findOne({name : nameOfNote});
