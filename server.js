@@ -15,7 +15,7 @@ const app = express();
 app.use(json());
 
 // Serve static files (e.g., HTML, CSS, images)
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 // Connect to MongoDB using the imported function
 connectDB();
