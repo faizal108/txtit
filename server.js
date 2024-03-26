@@ -24,12 +24,12 @@ injectSpeedInsights();
 
 app.get("/", async (req, res) => {
   try {
-    const indexHtml = await fs.readFile("../public/index.html", "utf-8");
-    const dom = new JSDOM(indexHtml);
-    // const nameOfNote = generateRandomName();
-    // res.redirect(`/${nameOfNote}`);
-    const updatedHtml = dom.serialize();
-    res.send(updatedHtml);
+    // const indexHtml = await fs.readFile("../public/index.html", "utf-8");
+    // const dom = new JSDOM(indexHtml);
+    const nameOfNote = generateRandomName();
+    res.redirect(`/${nameOfNote}`);
+    // const updatedHtml = dom.serialize();
+    // res.send(updatedHtml);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -99,3 +99,5 @@ app.listen(process.env.PORT || 3000, () => {
     `Server is running on http://localhost:${process.env.PORT || 3000}/`
   );
 });
+
+module.exports(app)
