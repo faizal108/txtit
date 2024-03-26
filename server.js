@@ -36,6 +36,15 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/ping", async (req, res) => {
+  try {
+    res.send("Connection Up..");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/:name_of_note", async (req, res) => {
   try {
     const nameOfNote = req.params.name_of_note;
