@@ -1,23 +1,19 @@
 {
-    "name": "txtit",
-    "version": "1.0.0",
-    "description": "",
-    "type": "module",
-    "scripts": {
-        "start": "node server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@vercel/node": "^3.0.24",
-        "@vercel/speed-insights": "^1.0.10",
-        "@vercel/static-build": "^2.4.4",
-        "cors": "^2.8.5",
-        "dotenv": "^16.4.5",
-        "express": "^4.18.2",
-        "jsdom": "^24.0.0",
-        "mongoose": "^8.1.1"
-    }
+  "name": "txtit",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "jsdom": "^24.0.0",
+    "mongoose": "^8.1.1"
+  }
 }

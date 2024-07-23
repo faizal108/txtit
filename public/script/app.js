@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Get the note name from the URL
   var noteName = window.location.pathname.split("/")[1];
+
   if (!noteName) {
     noteName = generateRandomName();
     window.history.pushState(null, null, `${noteName}`);
   }
-
 
   // Autosave functionality
   textarea.addEventListener("input", function () {
@@ -114,5 +114,4 @@ document.addEventListener("DOMContentLoaded", function () {
     saveIcon.classList.toggle("open");
     loadingIcon.classList.toggle("open");
   }
-
 });
